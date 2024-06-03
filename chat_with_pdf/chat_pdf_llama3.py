@@ -10,12 +10,16 @@ def embedchain_bot(db_path):
         config={
             "llm": {"provider": "ollama", "config": {"model": "llama3:instruct", "max_tokens": 250, "temperature": 0.5, "stream": True, "base_url": 'http://localhost:11434'}},
             "vectordb": {"provider": "chroma", "config": {"dir": db_path}},
-            "embedder": {"provider": "ollama", "config": {"model": "llama3:instruct", "base_url": 'http://localhost:11434'}},
+            "embedder": {"provider": "ollama", "config": {"model": "nomic-embed-text", "base_url": 'http://localhost:11434'}},
         }
     )
 
+# Ollama provides 3 embedded models - large (mxbai-embed-large), medium (nomic-embed-text), small (all-minilm)
+# https://ollama.com/blog/embedding-models
+# we chose to go with the medium model above - nomic-embed-text
+
 st.title("Chat with PDF")
-st.caption("This app allows you to chat with a PDF using Llama3 running locally wiht Ollama!")
+st.caption("This app allows you to chat with a PDF using Llama3 running locally with Ollama!")
 
 # Create a temporary directory to store the PDF file
 db_path = tempfile.mkdtemp()
